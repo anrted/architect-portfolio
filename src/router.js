@@ -15,6 +15,8 @@ import AdminContactsEdit from './components/admin/AdminContactsEdit.vue'
 import AdminBackup from './components/admin/AdminBackup.vue'
 import AdminHeaderEdit from './components/admin/AdminHeaderEdit.vue'
 import AdminUsersList from './components/admin/AdminUsersList.vue'
+import AdminColorPalette from './components/admin/AdminColorPalette.vue'
+import AdminComponentsEdit from './components/admin/AdminComponentsEdit.vue'
 
 import { useAdminStore } from './stores/admin.js'
 
@@ -90,6 +92,16 @@ const routes = [
         path: 'users',
         name: 'AdminUsersList',
         component: AdminUsersList
+      },
+      {
+        path: 'colors',
+        name: 'AdminColorPalette',
+        component: AdminColorPalette
+      },
+      {
+        path: 'components',
+        name: 'AdminComponentsEdit',
+        component: AdminComponentsEdit
       }
     ]
   }

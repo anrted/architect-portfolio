@@ -8,8 +8,8 @@ onMounted(async () => {
   try {
     const res = await axios.get('/api/projects.php')
     if (Array.isArray(res.data)) {
-      // Только проекты с изображением, ограничиваем до 6 для галереи
-      projects.value = res.data.filter(p => p.image_url).slice(0, 6)
+      // Показываем только 4 последних проекта для галереи
+      projects.value = res.data.slice(0, 4)
     } else {
       projects.value = []
     }
@@ -23,8 +23,8 @@ onMounted(async () => {
   <section id="gallery" class="mb-8 sm:mb-12 md:mb-16 lg:mb-20">
     <!-- Заголовок -->
     <div class="text-center mb-8 sm:mb-12 md:mb-16">
-      <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">Галерея работ</h2>
-      <p class="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6" :style="{ color: 'var(--text-color-main)' }">Галерея работ</h2>
+      <p class="text-base sm:text-lg md:text-xl max-w-2xl mx-auto px-4 sm:px-6" :style="{ color: 'var(--text-color-light)' }">
         Избранные проекты, демонстрирующие разнообразие архитектурных решений
       </p>
     </div>
@@ -32,11 +32,11 @@ onMounted(async () => {
     <!-- Галерея -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
       <template v-if="loading">
-        <div v-for="n in 6" :key="n" class="group bg-white rounded-xl sm:rounded-2xl shadow-lg overflow-hidden animate-pulse">
-          <div class="h-48 sm:h-56 md:h-64 bg-gradient-to-r from-gray-200 to-gray-300"></div>
+        <div v-for="n in 4" :key="n" class="group bg-white rounded-xl sm:rounded-2xl shadow-lg overflow-hidden animate-pulse" :style="{ borderColor: 'var(--border-primary)' }">
+          <div class="h-48 sm:h-56 md:h-64" :style="{ background: `linear-gradient(to right, var(--border-primary), var(--border-secondary))` }"></div>
           <div class="p-4 sm:p-6">
-            <div class="h-4 sm:h-6 bg-gray-200 rounded w-2/3 mb-2"></div>
-            <div class="h-3 sm:h-4 bg-gray-100 rounded w-full"></div>
+            <div class="h-4 sm:h-6 rounded w-2/3 mb-2" :style="{ backgroundColor: 'var(--border-primary)' }"></div>
+            <div class="h-3 sm:h-4 rounded w-full" :style="{ backgroundColor: 'var(--border-secondary)' }"></div>
           </div>
         </div>
       </template>
@@ -45,17 +45,23 @@ onMounted(async () => {
           v-for="(project, index) in projects" 
           :key="project.id"
           :to="`/projects/${project.id}`"
-          class="group bg-white rounded-xl sm:rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 sm:hover:-translate-y-3 hover:scale-[1.02] border border-gray-100"
-          :style="`animation-delay: ${index * 100}ms`"
+          class="group bg-white rounded-xl sm:rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 sm:hover:-translate-y-3 hover:scale-[1.02]"
+          :style="`animation-delay: ${index * 100}ms; borderColor: var(--border-primary)`"
         >
           <!-- Изображение с эффектами -->
           <div class="relative h-48 sm:h-56 md:h-64 overflow-hidden">
             <img 
+              v-if="project.image_url && project.image_url.trim() !== ''"
               :src="project.image_url" 
               :alt="project.title"
               class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
               loading="lazy"
             />
+            <div v-else class="w-full h-full flex items-center justify-center" :style="{ background: `linear-gradient(135deg, var(--border-primary), var(--border-secondary))` }">
+              <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" :style="{ color: 'var(--text-color-light)' }">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 002 2z"></path>
+              </svg>
+            </div>
             <!-- Оверлей при ховере -->
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             
@@ -75,48 +81,26 @@ onMounted(async () => {
           </div>
 
           <!-- Информация о проекте -->
-          <div class="p-4 sm:p-6 group-hover:bg-blue-50 transition-colors duration-300">
-            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
+          <div class="p-4 sm:p-6 transition-colors duration-300" :style="{ backgroundColor: 'var(--background-primary)' }">
+            <h3 class="text-lg sm:text-xl font-bold mb-2 transition-colors" :style="{ color: 'var(--text-color-main)' }">
               {{ project.title }}
             </h3>
-            <p class="text-gray-600 text-sm leading-relaxed group-hover:text-gray-700">
+            <p class="text-sm leading-relaxed transition-colors" :style="{ color: 'var(--text-color-light)' }">
               {{ project.description?.substring(0, 100) }}{{ project.description?.length > 100 ? '...' : '' }}
             </p>
             
             <!-- Тег типа проекта (если есть в данных) -->
             <div class="mt-4 flex items-center justify-between">
-              <span class="text-xs px-2 sm:px-3 py-1 bg-blue-100 text-blue-600 rounded-full font-medium">
+              <span class="text-xs px-2 sm:px-3 py-1 rounded-full font-medium" :style="{ backgroundColor: 'var(--primary-color-light)20', color: 'var(--primary-color)' }">
                 Архитектура
               </span>
-              <svg class="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 sm:w-5 sm:h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" :style="{ color: 'var(--primary-color)' }">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
               </svg>
             </div>
           </div>
         </router-link>
-        
-        <!-- Пустое состояние -->
-        <div v-if="!projects.length" class="col-span-full text-center py-8 sm:py-12 md:py-16">
-          <svg class="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-          </svg>
-          <h3 class="text-lg sm:text-xl font-medium text-gray-900 mb-2">Нет проектов</h3>
-          <p class="text-gray-500">Проекты будут добавлены в ближайшее время</p>
-        </div>
       </template>
-    </div>
-
-    <!-- Кнопка "Смотреть все проекты" -->
-    <div class="text-center mt-12" v-if="projects.length > 0">
-      <router-link 
-        to="/projects" 
-        class="inline-flex items-center px-8 py-4 bg-blue-600 text-white font-medium rounded-xl shadow-lg hover:bg-blue-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-      >
-        <span>Смотреть все проекты</span>
-        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-        </svg>
-      </router-link>
     </div>
   </section>
 </template>

@@ -11,7 +11,7 @@
         <button
           @click="saveContent"
           :disabled="saving"
-          class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 transition-all duration-200"
+          class="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 transition-all duration-200 shadow-lg hover:shadow-xl font-medium"
         >
           <svg v-if="saving" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -67,7 +67,7 @@
                   <span class="text-sm font-medium text-gray-700">Ссылка {{ index + 1 }}</span>
                   <button
                     @click="removeLink(index)"
-                    class="text-red-500 hover:text-red-700 transition-colors duration-200"
+                    class="text-gray-600 hover:text-gray-800 p-2 rounded-lg hover:bg-gray-100 bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200"
                   >
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -111,7 +111,7 @@
               
               <button
                 @click="addLink"
-                class="w-full py-2 px-4 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-gray-400 hover:text-gray-700 transition-all duration-200"
+                class="w-full py-3 px-4 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-gray-400 hover:text-gray-700 transition-all duration-200 hover:bg-gray-50 font-medium bg-white"
               >
                 + Добавить ссылку
               </button>

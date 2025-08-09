@@ -206,7 +206,7 @@
       <div class="flex justify-end space-x-4">
         <router-link
           to="/admin/projects"
-          class="px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+          class="px-4 py-3 text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition-all duration-200 font-medium"
         >
           Отмена
         </router-link>
@@ -214,7 +214,7 @@
         <button
           type="submit"
           :disabled="loading"
-          class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          class="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transition-all duration-200 font-medium"
         >
           {{ loading ? 'Сохранение...' : (isEdit ? 'Сохранить изменения' : 'Создать проект') }}
         </button>

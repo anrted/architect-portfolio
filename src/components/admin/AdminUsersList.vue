@@ -1,14 +1,14 @@
 <template>
-  <div class="space-y-4 sm:space-y-6">
+  <div class="h-full flex flex-col space-y-3">
     <!-- Заголовок и кнопка добавления -->
-    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
       <div>
         <h1 class="text-xl sm:text-2xl font-bold text-gray-900">Пользователи</h1>
-        <p class="text-sm sm:text-base text-gray-600">Управление пользователями админки</p>
+        <p class="text-sm text-gray-600">Управление пользователями админки</p>
       </div>
       <button
         @click="showCreateModal = true"
-        class="bg-blue-600 text-white px-3 py-2 sm:px-4 sm:py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-sm sm:text-base w-full sm:w-auto"
+        class="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-sm w-full sm:w-auto shadow-lg hover:shadow-xl transition-all duration-200 font-medium"
       >
         <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -18,137 +18,137 @@
     </div>
 
     <!-- Поиск -->
-    <div class="bg-white p-3 sm:p-4 rounded-lg shadow">
-      <div class="flex gap-2 sm:gap-4">
-        <div class="flex-1">
-          <input
-            v-model="searchQuery"
-            type="text"
-            placeholder="Поиск по имени, email или логину..."
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-            @input="handleSearch"
-          />
+    <div class="bg-white p-3 rounded-lg shadow">
+      <input
+        v-model="searchQuery"
+        type="text"
+        placeholder="Поиск по имени, email или логину..."
+        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+        @input="handleSearch"
+      />
+    </div>
+
+    <!-- Список пользователей -->
+    <div class="bg-white rounded-lg shadow flex-1 flex flex-col min-h-0">
+      <div v-if="loading" class="flex-1 flex items-center justify-center p-6">
+        <AdminSkeleton />
+      </div>
+      
+      <div v-else-if="users.length === 0" class="flex-1 flex flex-col items-center justify-center p-6 text-gray-500">
+        <svg class="w-12 h-12 mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-6a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+        </svg>
+        <p class="text-base">Пользователи не найдены</p>
+      </div>
+      
+      <div v-else class="flex-1 flex flex-col min-h-0">
+        <div class="overflow-x-auto flex-1">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50 sticky top-0">
+              <tr>
+                <th class="px-3 sm:px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style="width: 35%;">
+                  Пользователь
+                </th>
+                <th class="px-2 sm:px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell" style="width: 15%;">
+                  Роль
+                </th>
+                <th class="px-2 sm:px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell" style="width: 15%;">
+                  Статус
+                </th>
+                <th class="px-2 sm:px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell" style="width: 20%;">
+                  Последний вход
+                </th>
+                <th class="px-3 sm:px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style="width: 15%;">
+                  Действия
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr v-for="user in users" :key="user.id" class="hover:bg-gray-50">
+                <td class="px-3 sm:px-4 py-3">
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0 h-8 w-8 sm:h-10 sm:w-10">
+                      <div class="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-blue-500 flex items-center justify-center">
+                        <span class="text-white font-medium text-sm sm:text-base">{{ user.full_name.charAt(0).toUpperCase() }}</span>
+                      </div>
+                    </div>
+                    <div class="ml-3 sm:ml-4 min-w-0 flex-1">
+                      <div class="text-sm font-medium text-gray-900 truncate">{{ user.full_name }}</div>
+                      <div class="text-xs sm:text-sm text-gray-500 truncate">{{ user.email }}</div>
+                      <div class="text-xs text-gray-400">@{{ user.username }}</div>
+                      <!-- Мобильная информация -->
+                      <div class="sm:hidden mt-1">
+                        <span 
+                          class="inline-flex px-2 py-1 text-xs font-semibold rounded-full mr-2"
+                          :class="user.role === 'admin' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'"
+                        >
+                          {{ user.role === 'admin' ? 'Админ' : 'Редактор' }}
+                        </span>
+                        <span 
+                          class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
+                          :class="user.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'"
+                        >
+                          {{ user.is_active ? 'Активен' : 'Неактивен' }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-2 sm:px-4 py-3 hidden sm:table-cell">
+                  <span 
+                    class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
+                    :class="user.role === 'admin' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'"
+                  >
+                    {{ user.role === 'admin' ? 'Админ' : 'Редактор' }}
+                  </span>
+                </td>
+                <td class="px-2 sm:px-4 py-3 hidden sm:table-cell">
+                  <span 
+                    class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
+                    :class="user.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'"
+                  >
+                    {{ user.is_active ? 'Активен' : 'Неактивен' }}
+                  </span>
+                </td>
+                <td class="px-2 sm:px-4 py-3 text-sm text-gray-500 hidden lg:table-cell">
+                  {{ user.last_login ? formatDate(user.last_login) : 'Никогда' }}
+                </td>
+                <td class="px-3 sm:px-4 py-3 text-sm font-medium">
+                  <div class="flex flex-col sm:flex-row gap-1 sm:gap-1">
+                    <button
+                      @click="editUser(user)"
+                      class="inline-flex items-center justify-center text-blue-600 hover:text-blue-900 text-xs px-1.5 py-1 rounded hover:bg-blue-50 transition-colors whitespace-nowrap min-w-0"
+                      title="Редактировать"
+                    >
+                      <svg class="w-3 h-3 mr-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                      </svg>
+                      <span class="hidden sm:inline truncate text-xs">Изменить</span>
+                      <span class="sm:hidden truncate text-xs">Изменить</span>
+                    </button>
+                    <button
+                      v-if="user.id !== currentUser?.id"
+                      @click="deleteUser(user)"
+                      class="inline-flex items-center justify-center text-red-600 hover:text-red-900 text-xs px-1.5 py-1 rounded hover:bg-red-50 transition-colors whitespace-nowrap min-w-0"
+                      title="Удалить"
+                    >
+                      <svg class="w-3 h-3 mr-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                      </svg>
+                      <span class="hidden sm:inline truncate text-xs">Удалить</span>
+                      <span class="sm:hidden truncate text-xs">Удал.</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
 
-    <!-- Список пользователей -->
-    <div class="bg-white rounded-lg shadow overflow-hidden">
-      <div v-if="loading" class="p-4 sm:p-6">
-        <AdminSkeleton />
-      </div>
-      
-      <div v-else-if="users.length === 0" class="p-4 sm:p-6 text-center text-gray-500">
-        <svg class="w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-6a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
-        </svg>
-        <p class="text-sm sm:text-base">Пользователи не найдены</p>
-      </div>
-      
-      <div v-else class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Пользователь
-              </th>
-              <th class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
-                Роль
-              </th>
-              <th class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
-                Статус
-              </th>
-              <th class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">
-                Последний вход
-              </th>
-              <th class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Действия
-              </th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="user in users" :key="user.id" class="hover:bg-gray-50">
-              <td class="px-3 sm:px-6 py-4">
-                <div class="flex items-center">
-                  <div class="flex-shrink-0 h-8 w-8 sm:h-10 sm:w-10">
-                    <div class="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-blue-500 flex items-center justify-center">
-                      <span class="text-white font-medium text-sm sm:text-base">{{ user.full_name.charAt(0).toUpperCase() }}</span>
-                    </div>
-                  </div>
-                  <div class="ml-3 sm:ml-4 min-w-0 flex-1">
-                    <div class="text-sm font-medium text-gray-900 truncate">{{ user.full_name }}</div>
-                    <div class="text-xs sm:text-sm text-gray-500 truncate">{{ user.email }}</div>
-                    <div class="text-xs text-gray-400">@{{ user.username }}</div>
-                    <!-- Мобильная информация -->
-                    <div class="sm:hidden mt-1">
-                      <span 
-                        class="inline-flex px-2 py-1 text-xs font-semibold rounded-full mr-2"
-                        :class="user.role === 'admin' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'"
-                      >
-                        {{ user.role === 'admin' ? 'Админ' : 'Редактор' }}
-                      </span>
-                      <span 
-                        class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
-                        :class="user.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'"
-                      >
-                        {{ user.is_active ? 'Активен' : 'Неактивен' }}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-2 sm:px-6 py-4 hidden sm:table-cell">
-                <span 
-                  class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
-                  :class="user.role === 'admin' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'"
-                >
-                  {{ user.role === 'admin' ? 'Администратор' : 'Редактор' }}
-                </span>
-              </td>
-              <td class="px-2 sm:px-6 py-4 hidden sm:table-cell">
-                <span 
-                  class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
-                  :class="user.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'"
-                >
-                  {{ user.is_active ? 'Активен' : 'Неактивен' }}
-                </span>
-              </td>
-              <td class="px-2 sm:px-6 py-4 text-sm text-gray-500 hidden lg:table-cell">
-                {{ user.last_login ? formatDate(user.last_login) : 'Никогда' }}
-              </td>
-              <td class="px-3 sm:px-6 py-4 text-sm font-medium">
-                <div class="flex flex-col sm:flex-row gap-1 sm:gap-2">
-                  <button
-                    @click="editUser(user)"
-                    class="inline-flex items-center justify-center text-blue-600 hover:text-blue-900 text-xs sm:text-sm px-2 py-1 rounded hover:bg-blue-50 transition-colors"
-                  >
-                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                    </svg>
-                    <span class="hidden sm:inline">Редактировать</span>
-                    <span class="sm:hidden">Изменить</span>
-                  </button>
-                  <button
-                    v-if="user.id !== currentUser?.id"
-                    @click="deleteUser(user)"
-                    class="inline-flex items-center justify-center text-red-600 hover:text-red-900 text-xs sm:text-sm px-2 py-1 rounded hover:bg-red-50 transition-colors"
-                  >
-                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                    </svg>
-                    <span class="hidden sm:inline">Удалить</span>
-                    <span class="sm:hidden">Удал.</span>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
     <!-- Пагинация -->
-    <div v-if="pagination.total_pages > 1" class="bg-white px-3 sm:px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+    <div v-if="pagination.total_pages > 1" class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 rounded-lg shadow">
       <div class="flex-1 flex justify-between sm:hidden">
         <button
           @click="changePage(pagination.current_page - 1)"

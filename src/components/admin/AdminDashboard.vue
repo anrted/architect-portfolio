@@ -12,7 +12,7 @@
       </div>
       
       <!-- Статистика -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div v-if="canViewSection('projects')" class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-all duration-200">
           <div class="flex items-center">
             <div class="p-2 bg-blue-100 rounded-lg">
@@ -64,6 +64,7 @@
         <div class="p-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <router-link
+              v-if="canViewSection('projects')"
               to="/admin/projects/create"
               class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-all duration-200 hover:shadow-md"
             >
@@ -79,6 +80,7 @@
             </router-link>
             
             <router-link
+              v-if="canViewSection('projects')"
               to="/admin/projects"
               class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-all duration-200 hover:shadow-md"
             >
@@ -94,6 +96,7 @@
             </router-link>
             
             <router-link
+              v-if="canViewSection('backup')"
               to="/admin/backup"
               class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-all duration-200 hover:shadow-md"
             >
@@ -109,6 +112,7 @@
             </router-link>
             
             <router-link
+              v-if="canViewSection('about')"
               to="/admin/about"
               class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-all duration-200 hover:shadow-md"
             >
@@ -122,12 +126,60 @@
                 <p class="text-sm text-gray-600">Изменить контент главной страницы</p>
               </div>
             </router-link>
+            
+            <router-link
+              v-if="canViewSection('header')"
+              to="/admin/header"
+              class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-all duration-200 hover:shadow-md"
+            >
+              <div class="p-2 bg-indigo-100 rounded-lg">
+                <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+              </div>
+              <div class="ml-4">
+                <p class="font-medium text-gray-900">Редактировать шапку</p>
+                <p class="text-sm text-gray-600">Изменить контент шапки сайта</p>
+              </div>
+            </router-link>
+            
+            <router-link
+              v-if="canViewSection('contacts')"
+              to="/admin/contacts"
+              class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-all duration-200 hover:shadow-md"
+            >
+              <div class="p-2 bg-pink-100 rounded-lg">
+                <svg class="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <div class="ml-4">
+                <p class="font-medium text-gray-900">Редактировать контакты</p>
+                <p class="text-sm text-gray-600">Изменить контактную информацию</p>
+              </div>
+            </router-link>
+            
+            <router-link
+              v-if="canViewSection('users')"
+              to="/admin/users"
+              class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-all duration-200 hover:shadow-md"
+            >
+              <div class="p-2 bg-red-100 rounded-lg">
+                <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+              </div>
+              <div class="ml-4">
+                <p class="font-medium text-gray-900">Управление пользователями</p>
+                <p class="text-sm text-gray-600">Управлять пользователями админки</p>
+              </div>
+            </router-link>
           </div>
         </div>
       </div>
       
       <!-- Последние проекты -->
-      <div class="bg-white rounded-lg shadow">
+      <div v-if="canViewSection('projects')" class="bg-white rounded-lg shadow">
         <div class="p-6 border-b border-gray-200">
           <h2 class="text-lg font-medium text-gray-900">Последние проекты</h2>
         </div>
@@ -181,12 +233,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, nextTick } from 'vue'
+import { ref, onMounted, watch, nextTick, computed } from 'vue'
 import { useRoute, onBeforeRouteUpdate } from 'vue-router'
 import axios from 'axios'
 import AdminSkeleton from './AdminSkeleton.vue'
+import { useAdminStore } from '../../stores/admin'
 
 const route = useRoute()
+const adminStore = useAdminStore()
+
+const user = computed(() => adminStore.user)
+const canViewSection = adminStore.canViewSection
 
 const stats = ref({
   totalProjects: 0,

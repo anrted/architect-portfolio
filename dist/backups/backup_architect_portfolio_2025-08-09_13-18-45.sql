@@ -79,7 +79,7 @@ CREATE TABLE `admin_sessions` (
 
 LOCK TABLES `admin_sessions` WRITE;
 /*!40000 ALTER TABLE `admin_sessions` DISABLE KEYS */;
-INSERT INTO `admin_sessions` VALUES ('79b692423633c1e00ee35f845e26d8402d7d3ed705eb331291dbf125e6193f1111617380c878d6089f1a97a7954e5146af7eaaecf218f9649b2325d3d3ec4b59',2,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36','2025-08-09 04:53:10','2025-08-10 04:53:10');
+INSERT INTO `admin_sessions` VALUES ('2a72a62bfd81476bef2f2531cca2f9ce3f5d698e2913b4cb9020e189721e8443a9d01735bf8ca6a58638d85beef9fda128705bab7af47b9a2c8dcb72efa81176',3,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36','2025-08-09 09:25:20','2025-08-10 09:25:20'),('35cd6a70292e02393bc4884334354af4e1c65dd228c54b103464254958e9ec61ae56fbf9854688f8706c0a58c032c5918400e279335e7ec4a4d9130b8ca12b68',2,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36','2025-08-09 09:03:24','2025-08-10 09:03:24'),('79b692423633c1e00ee35f845e26d8402d7d3ed705eb331291dbf125e6193f1111617380c878d6089f1a97a7954e5146af7eaaecf218f9649b2325d3d3ec4b59',2,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36','2025-08-09 04:53:10','2025-08-10 04:53:10'),('b85534f6ad35dea88d7b115020609c902b9b89f7abe3dd21dc435d585c7b5a52d02fb3ee07dbfcd613295347efcf2f381bf2659df0ea4ac6cf1423698c4a0644',3,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36','2025-08-09 09:20:39','2025-08-10 09:20:39');
 /*!40000 ALTER TABLE `admin_sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,7 +108,7 @@ CREATE TABLE `admin_users` (
   KEY `idx_username` (`username`),
   KEY `idx_email` (`email`),
   KEY `idx_is_active` (`is_active`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,7 +117,7 @@ CREATE TABLE `admin_users` (
 
 LOCK TABLES `admin_users` WRITE;
 /*!40000 ALTER TABLE `admin_users` DISABLE KEYS */;
-INSERT INTO `admin_users` VALUES (2,'admin','admin@architect-portfolio.local','$2y$10$I85dUbobw4UUwa7CvgpZmOWWBJUql0TXRdflpcxSXXDFN/bMpbD7W','Администратор','admin','{\"blocks\": {\"read\": true, \"create\": true, \"delete\": true, \"update\": true}, \"projects\": {\"read\": true, \"create\": true, \"delete\": true, \"update\": true}, \"admin_users\": {\"read\": true, \"create\": true, \"delete\": true, \"update\": true}, \"about_content\": {\"read\": true, \"create\": true, \"delete\": true, \"update\": true}, \"header_content\": {\"read\": true, \"create\": true, \"delete\": true, \"update\": true}, \"contacts_content\": {\"read\": true, \"create\": true, \"delete\": true, \"update\": true}}',1,'2025-08-09 04:53:10','2025-08-09 04:41:36','2025-08-09 07:15:35');
+INSERT INTO `admin_users` VALUES (2,'admin','admin@architect-portfolio.local','$2y$10$I85dUbobw4UUwa7CvgpZmOWWBJUql0TXRdflpcxSXXDFN/bMpbD7W','Администратор','admin','{\"blocks\": {\"read\": true, \"create\": true, \"delete\": true, \"update\": true}, \"projects\": {\"read\": true, \"create\": true, \"delete\": true, \"update\": true}, \"admin_users\": {\"read\": true, \"create\": true, \"delete\": true, \"update\": true}, \"about_content\": {\"read\": true, \"create\": true, \"delete\": true, \"update\": true}, \"header_content\": {\"read\": true, \"create\": true, \"delete\": true, \"update\": true}, \"contacts_content\": {\"read\": true, \"create\": true, \"delete\": true, \"update\": true}}',1,'2025-08-09 09:03:24','2025-08-09 04:41:36','2025-08-09 09:03:24'),(3,'test','test@test','$2y$10$4k9p0B9zQUb/VfjUvAV8oO54U2BcteG4Dy/SzO.z63.C1.fBYKkaK','testt','editor','{\"projects\": {\"read\": true, \"create\": true, \"delete\": false, \"update\": true}, \"admin_users\": {\"read\": false, \"create\": false, \"delete\": false, \"update\": false}, \"admin_backup\": {\"read\": false, \"create\": false}, \"about_content\": {\"read\": false, \"update\": false}, \"header_content\": {\"read\": false, \"update\": false}, \"contacts_content\": {\"read\": false, \"update\": false}}',1,'2025-08-09 09:25:20','2025-08-09 09:20:27','2025-08-09 09:25:20');
 /*!40000 ALTER TABLE `admin_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,7 +229,7 @@ CREATE TABLE `project_blocks` (
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`),
   CONSTRAINT `project_blocks_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,7 +238,7 @@ CREATE TABLE `project_blocks` (
 
 LOCK TABLES `project_blocks` WRITE;
 /*!40000 ALTER TABLE `project_blocks` DISABLE KEYS */;
-INSERT INTO `project_blocks` VALUES (5,1,'image','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZOm7aZE0EbfWuS_tpez-3F9bflZxepISvAQ&s',0),(6,1,'text','Какой-то текст в первом блоке',1),(7,1,'image','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn7LXpnu4WTqaR1dxsuLsd7NG3PkXdvmzeMg&s',2),(8,1,'text','Еще текст',3);
+INSERT INTO `project_blocks` VALUES (9,1,'image','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZOm7aZE0EbfWuS_tpez-3F9bflZxepISvAQ&s',0),(10,1,'text','Какой-то текст в первом блоке',1),(11,1,'image','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn7LXpnu4WTqaR1dxsuLsd7NG3PkXdvmzeMg&s',2),(12,1,'text','Еще текст',3);
 /*!40000 ALTER TABLE `project_blocks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -257,7 +257,7 @@ CREATE TABLE `projects` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -266,7 +266,7 @@ CREATE TABLE `projects` (
 
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-INSERT INTO `projects` VALUES (1,'Новый проект','Описание проекта','https://s3.stroi-news.ru/img/krasivii-zagorodnii-dom-krasivo-1.jpg','2025-08-08 18:24:55','2025-08-09 07:32:19');
+INSERT INTO `projects` VALUES (1,'Новый проект','Описание проекта','https://s3.stroi-news.ru/img/krasivii-zagorodnii-dom-krasivo-1.jpg','2025-08-08 18:24:55','2025-08-09 07:32:19'),(2,'тест','домик вот','','2025-08-09 09:27:59','2025-08-09 09:27:59');
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -322,6 +322,36 @@ LOCK TABLES `settings` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `site_settings`
+--
+
+DROP TABLE IF EXISTS `site_settings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `site_settings` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `setting_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `setting_value` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `setting_type` enum('string','json','boolean','number') COLLATE utf8mb4_unicode_ci DEFAULT 'string',
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `setting_key` (`setting_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `site_settings`
+--
+
+LOCK TABLES `site_settings` WRITE;
+/*!40000 ALTER TABLE `site_settings` DISABLE KEYS */;
+INSERT INTO `site_settings` VALUES (19,'color_palette','{\"primary\":{\"main\":\"#1d873c\",\"light\":\"#38d465\",\"dark\":\"#145f2a\",\"contrast\":\"#ffffff\"},\"secondary\":{\"main\":\"#64748b\",\"light\":\"#94a3b8\",\"dark\":\"#475569\",\"contrast\":\"#ffffff\"},\"accent\":{\"main\":\"#f59e0b\",\"light\":\"#fbbf24\",\"dark\":\"#d97706\",\"contrast\":\"#000000\"},\"background\":{\"primary\":\"#ffffff\",\"secondary\":\"#f8fafc\",\"tertiary\":\"#f1f5f9\"},\"text\":{\"primary\":\"#1e293b\",\"secondary\":\"#64748b\",\"muted\":\"#94a3b8\"},\"border\":{\"primary\":\"#e2e8f0\",\"secondary\":\"#cbd5e1\"},\"success\":{\"main\":\"#10b981\",\"light\":\"#34d399\",\"dark\":\"#059669\"},\"error\":{\"main\":\"#ef4444\",\"light\":\"#f87171\",\"dark\":\"#dc2626\"},\"warning\":{\"main\":\"#f59e0b\",\"light\":\"#fbbf24\",\"dark\":\"#d97706\"},\"info\":{\"main\":\"#3b82f6\",\"light\":\"#60a5fa\",\"dark\":\"#2563eb\"}}','json','Настройки цветовой палитры сайта для админки','2025-08-09 09:49:35','2025-08-09 10:06:21'),(20,'theme_mode','light','string','Режим темы: light, dark, auto','2025-08-09 09:49:35','2025-08-09 09:50:32'),(21,'custom_css','','string','Пользовательские CSS стили','2025-08-09 09:49:35','2025-08-09 09:50:32'),(22,'site_title_color','#1e293b','string','Цвет заголовка сайта','2025-08-09 09:49:35','2025-08-09 09:50:32'),(23,'site_description_color','#64748b','string','Цвет описания сайта','2025-08-09 09:49:35','2025-08-09 09:50:32'),(24,'button_primary_color','#2563eb','string','Основной цвет кнопок','2025-08-09 09:49:35','2025-08-09 09:50:32'),(25,'button_secondary_color','#64748b','string','Вторичный цвет кнопок','2025-08-09 09:49:35','2025-08-09 09:50:32'),(26,'link_color','#2563eb','string','Цвет ссылок','2025-08-09 09:49:35','2025-08-09 09:50:32'),(27,'link_hover_color','#1d4ed8','string','Цвет ссылок при наведении','2025-08-09 09:49:35','2025-08-09 09:50:32');
+/*!40000 ALTER TABLE `site_settings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping routines for database 'architect_portfolio'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -334,4 +364,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-08-09 15:05:10
+-- Dump completed on 2025-08-09 17:18:45

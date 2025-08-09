@@ -8,6 +8,41 @@ const sessionId = ref(localStorage.getItem('admin_session_id'))
 export function useAdminStore() {
   const isAuthenticated = computed(() => !!user.value)
   
+  // Функция для проверки прав пользователя
+  const hasPermission = (resource, action) => {
+    if (!user.value) return false
+    
+    // Если у пользователя роль admin, то у него есть все права
+    if (user.value.role === 'admin') return true
+    
+    const permissions = user.value.permissions
+    if (!permissions || !permissions[resource]) return false
+    
+    return permissions[resource][action] === true
+  }
+  
+  // Функция для проверки прав на просмотр раздела
+  const canViewSection = (section) => {
+    // Если пользователь не авторизован, то у него нет прав
+    if (!user.value) return false
+    
+    // Если у пользователя роль admin, то у него есть все права
+    if (user.value.role === 'admin') return true
+    
+    const sectionPermissions = {
+      'about': ['about_content', 'read'],
+      'header': ['header_content', 'read'],
+      'contacts': ['contacts_content', 'read'],
+      'backup': ['admin_backup', 'read'],
+      'projects': ['projects', 'read'],
+      'users': ['admin_users', 'read'],
+      'settings': ['admin_settings', 'read']
+    }
+    
+    const [resource, action] = sectionPermissions[section] || []
+    return resource ? hasPermission(resource, action) : false
+  }
+  
   const login = async (username, password) => {
     try {
       const response = await axios.post('/api/auth.php', {
@@ -89,6 +124,8 @@ export function useAdminStore() {
   return {
     user: computed(() => user.value),
     isAuthenticated,
+    hasPermission,
+    canViewSection,
     login,
     logout,
     checkAuth

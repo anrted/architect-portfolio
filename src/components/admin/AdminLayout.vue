@@ -1,12 +1,12 @@
 <template>
-  <div class="min-h-screen bg-gray-50 flex">
+  <div class="min-h-screen bg-gray-50 flex flex-col lg:flex-row">
     <!-- Мобильная кнопка меню -->
-    <div class="lg:hidden fixed top-4 left-4 z-50">
+    <div class="lg:hidden fixed top-4 left-4 z-[60]">
       <button
         @click="toggleMobileMenu"
-        class="bg-white p-2 rounded-md shadow-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="bg-white p-2.5 rounded-xl shadow-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-300 transition-all duration-200 hover:shadow-xl"
       >
-        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </button>
@@ -14,7 +14,7 @@
 
     <!-- Боковая панель -->
     <aside 
-      class="fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0"
+      class="fixed inset-y-0 left-0 z-[55] w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:flex-shrink-0"
       :class="mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'"
     >
       <div class="p-4 sm:p-6 border-b border-gray-200">
@@ -25,9 +25,9 @@
           </div>
           <button
             @click="toggleMobileMenu"
-            class="lg:hidden p-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="lg:hidden p-2.5 rounded-xl hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-300 transition-all duration-200 bg-white shadow-sm hover:shadow-md"
           >
-            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 text-gray-900" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
           </button>
@@ -48,6 +48,7 @@
         </router-link>
         
         <router-link
+          v-if="canViewSection('about')"
           to="/admin/about"
           @click="closeMobileMenu"
           class="flex items-center px-4 sm:px-6 py-2 sm:py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 border-r-3 hover:border-blue-600 transition-all duration-200 text-sm sm:text-base"
@@ -60,6 +61,20 @@
         </router-link>
         
         <router-link
+          v-if="canViewSection('about')"
+          to="/admin/components"
+          @click="closeMobileMenu"
+          class="flex items-center px-4 sm:px-6 py-2 sm:py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 border-r-3 hover:border-blue-600 transition-all duration-200 text-sm sm:text-base"
+          :class="{ 'bg-blue-50 text-blue-600 border-blue-600': $route.path === '/admin/components' }"
+        >
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+          </svg>
+          <span class="truncate">Компоненты</span>
+        </router-link>
+        
+        <router-link
+          v-if="canViewSection('header')"
           to="/admin/header"
           @click="closeMobileMenu"
           class="flex items-center px-4 sm:px-6 py-2 sm:py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 border-r-3 hover:border-blue-600 transition-all duration-200 text-sm sm:text-base"
@@ -72,6 +87,7 @@
         </router-link>
         
         <router-link
+          v-if="canViewSection('contacts')"
           to="/admin/contacts"
           @click="closeMobileMenu"
           class="flex items-center px-4 sm:px-6 py-2 sm:py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 border-r-3 hover:border-blue-600 transition-all duration-200 text-sm sm:text-base"
@@ -84,6 +100,7 @@
         </router-link>
         
         <router-link
+          v-if="canViewSection('backup')"
           to="/admin/backup"
           @click="closeMobileMenu"
           class="flex items-center px-4 sm:px-6 py-2 sm:py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 border-r-3 hover:border-blue-600 transition-all duration-200 text-sm sm:text-base"
@@ -96,6 +113,20 @@
         </router-link>
         
         <router-link
+          v-if="canViewSection('settings')"
+          to="/admin/colors"
+          @click="closeMobileMenu"
+          class="flex items-center px-4 sm:px-6 py-2 sm:py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 border-r-3 hover:border-blue-600 transition-all duration-200 text-sm sm:text-base"
+          :class="{ 'bg-blue-50 text-blue-600 border-blue-600': $route.path === '/admin/colors' }"
+        >
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17v4a2 2 0 002 2h4M7 17l-2.828 2.828a2 2 0 01-2.828 0L2 16.172a2 2 0 010-2.828L7 17z"></path>
+          </svg>
+          <span class="truncate">Цветовая палитра</span>
+        </router-link>
+        
+        <router-link
+          v-if="canViewSection('projects')"
           to="/admin/projects"
           @click="closeMobileMenu"
           class="flex items-center px-4 sm:px-6 py-2 sm:py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 border-r-3 hover:border-blue-600 transition-all duration-200 text-sm sm:text-base"
@@ -108,6 +139,7 @@
         </router-link>
         
         <router-link
+          v-if="canViewSection('users')"
           to="/admin/users"
           @click="closeMobileMenu"
           class="flex items-center px-4 sm:px-6 py-2 sm:py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 border-r-3 hover:border-blue-600 transition-all duration-200 text-sm sm:text-base"
@@ -125,13 +157,13 @@
     <div 
       v-if="mobileMenuOpen" 
       @click="closeMobileMenu"
-      class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+      class="fixed inset-0 bg-black bg-opacity-50 z-[50] lg:hidden"
     ></div>
     
     <!-- Основной контент -->
-    <main class="flex-1 overflow-hidden lg:ml-0">
+    <main class="flex-1 overflow-hidden lg:ml-0 flex flex-col min-h-0">
       <!-- Шапка -->
-      <header class="bg-white shadow-sm border-b border-gray-200">
+      <header class="bg-white shadow-sm border-b border-gray-200 flex-shrink-0">
         <div class="px-4 sm:px-6 py-4 flex justify-between items-center">
           <h2 class="text-base sm:text-lg font-medium text-gray-900">
             {{ pageTitle }}
@@ -150,7 +182,7 @@
             
             <button 
               @click="handleLogout"
-              class="text-gray-600 hover:text-gray-900 transition-colors duration-200 p-2 rounded-md hover:bg-gray-100"
+              class="text-gray-600 hover:text-gray-900 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-100 bg-white border border-gray-200 shadow-sm hover:shadow-md"
               title="Выйти"
             >
               <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,10 +194,10 @@
       </header>
       
       <!-- Содержимое страницы -->
-      <div class="p-4 sm:p-6">
+      <div class="flex-1 flex flex-col min-h-0 p-4 sm:p-6 lg:pt-6 pt-20">
         <router-view v-slot="{ Component }">
           <transition name="fade" mode="out-in">
-            <component :is="Component" :key="$route.path" />
+            <component :is="Component" :key="$route.path" class="h-full" />
           </transition>
         </router-view>
       </div>
@@ -183,6 +215,7 @@ const router = useRouter()
 const adminStore = useAdminStore()
 
 const user = computed(() => adminStore.user)
+const canViewSection = adminStore.canViewSection
 
 const mobileMenuOpen = ref(false)
 
@@ -198,13 +231,15 @@ const pageTitle = computed(() => {
   const titles = {
     '/admin': 'Панель управления',
     '/admin/about': 'Редактирование главной страницы',
+    '/admin/components': 'Управление компонентами',
     '/admin/header': 'Редактирование шапки сайта',
     '/admin/contacts': 'Редактирование контактов',
     '/admin/backup': 'Резервные копии БД',
     '/admin/projects': 'Управление проектами',
     '/admin/projects/create': 'Создание проекта',
     '/admin/projects/edit': 'Редактирование проекта',
-    '/admin/users': 'Управление пользователями'
+    '/admin/users': 'Управление пользователями',
+    '/admin/colors': 'Цветовая палитра'
   }
   
   for (const [path, title] of Object.entries(titles)) {

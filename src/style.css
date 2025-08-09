@@ -2,6 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CSS переменные для цветовой палитры */
+:root {
+  /* Основные цвета */
+  --primary-color: #2563eb;
+  --primary-color-light: #3b82f6;
+  --primary-color-dark: #1d4ed8;
+  --primary-color-contrast: #ffffff;
+  
+  /* Цвета текста */
+  --text-color-main: #1e293b;
+  --text-color-light: #64748b;
+  --text-color-dark: #0f172a;
+  --text-color-contrast: #ffffff;
+  
+  /* Фоновые цвета */
+  --background-primary: #ffffff;
+  --background-secondary: #f8fafc;
+  --background-tertiary: #f1f5f9;
+  
+  /* Цвета текста (legacy) */
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  
+  /* Цвета границ */
+  --border-primary: #e2e8f0;
+  --border-secondary: #cbd5e1;
+  
+  /* Цвета состояний */
+  --success-color: #10b981;
+  --error-color: #ef4444;
+  --warning-color: #f59e0b;
+  --info-color: #3b82f6;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -9,16 +44,18 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--primary-color);
+  color: var(--primary-color-contrast);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  background-color: var(--primary-color-dark);
+  border-color: var(--primary-color-dark);
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 4px auto var(--primary-color);
 }
 
 .card {
@@ -46,14 +83,15 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: var(--text-color-main);
+    background-color: var(--background-primary);
   }
   a:hover {
-    color: #747bff;
+    color: var(--primary-color);
   }
   button {
-    background-color: #f9f9f9;
+    background-color: var(--primary-color);
+    color: var(--primary-color-contrast);
   }
 }
 
