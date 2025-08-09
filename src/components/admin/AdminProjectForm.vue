@@ -1,5 +1,24 @@
 <template>
-  <div class="space-y-6">
+  <div v-if="loading" class="space-y-6">
+    <div class="flex items-center justify-between">
+      <div>
+        <div class="h-8 bg-gray-200 rounded w-64 animate-pulse"></div>
+        <div class="h-4 bg-gray-200 rounded w-48 mt-2 animate-pulse"></div>
+      </div>
+      <div class="h-8 bg-gray-200 rounded w-32 animate-pulse"></div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="h-6 bg-gray-200 rounded w-48 mb-4 animate-pulse"></div>
+      <div class="space-y-4">
+        <div class="h-4 bg-gray-200 rounded w-full animate-pulse"></div>
+        <div class="h-4 bg-gray-200 rounded w-3/4 animate-pulse"></div>
+        <div class="h-4 bg-gray-200 rounded w-1/2 animate-pulse"></div>
+      </div>
+    </div>
+  </div>
+  
+  <div v-else class="space-y-6">
     <!-- Заголовок -->
     <div class="flex items-center justify-between">
       <div>
@@ -18,6 +37,11 @@
         </svg>
         <span>Назад к списку</span>
       </router-link>
+    </div>
+    
+    <!-- Ошибки -->
+    <div v-if="error" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+      {{ error }}
     </div>
     
     <!-- Форма -->
@@ -178,11 +202,6 @@
         </div>
       </div>
       
-      <!-- Ошибки -->
-      <div v-if="error" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-        {{ error }}
-      </div>
-      
       <!-- Кнопки -->
       <div class="flex justify-end space-x-4">
         <router-link
@@ -205,8 +224,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { ref, computed, onMounted, watch, nextTick } from 'vue'
+import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router'
 import axios from 'axios'
 
 const route = useRoute()
@@ -244,8 +263,19 @@ const moveBlock = (index, direction) => {
 }
 
 const loadProject = async () => {
-  if (!isEdit.value) return
+  if (!isEdit.value) {
+    // Очищаем форму для создания нового проекта
+    form.value = {
+      title: '',
+      description: '',
+      image_url: '',
+      blocks: []
+    }
+    loading.value = false
+    return
+  }
   
+  loading.value = true
   try {
     const response = await axios.get(`/api/project_full.php?id=${route.params.id}`)
     
@@ -256,10 +286,14 @@ const loadProject = async () => {
         image_url: response.data.image_url || '',
         blocks: response.data.blocks || []
       }
+    } else {
+      router.push('/admin/projects')
     }
   } catch (error) {
     console.error('Ошибка загрузки проекта:', error)
     router.push('/admin/projects')
+  } finally {
+    loading.value = false
   }
 }
 
@@ -287,7 +321,36 @@ const handleSubmit = async () => {
   }
 }
 
+// Загружаем данные при монтировании компонента
 onMounted(() => {
+  if (isEdit.value) {
+    loading.value = true
+  }
   loadProject()
+})
+
+// Следим за изменениями маршрута и перезагружаем данные при необходимости
+watch(() => route.path, (newPath, oldPath) => {
+  if (newPath !== oldPath) {
+    nextTick(() => {
+      loadProject()
+    })
+  }
+})
+
+// Следим за изменениями ID проекта
+watch(() => route.params.id, (newId, oldId) => {
+  if (newId !== oldId) {
+    nextTick(() => {
+      loadProject()
+    })
+  }
+})
+
+// Дополнительная проверка при обновлении маршрута
+onBeforeRouteUpdate((to, from) => {
+  nextTick(() => {
+    loadProject()
+  })
 })
 </script>

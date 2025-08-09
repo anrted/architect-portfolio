@@ -10,6 +10,11 @@ import AdminLayout from './components/admin/AdminLayout.vue'
 import AdminDashboard from './components/admin/AdminDashboard.vue'
 import AdminProjectsList from './components/admin/AdminProjectsList.vue'
 import AdminProjectForm from './components/admin/AdminProjectForm.vue'
+import AdminAboutEdit from './components/admin/AdminAboutEdit.vue'
+import AdminContactsEdit from './components/admin/AdminContactsEdit.vue'
+import AdminBackup from './components/admin/AdminBackup.vue'
+import AdminHeaderEdit from './components/admin/AdminHeaderEdit.vue'
+import AdminUsersList from './components/admin/AdminUsersList.vue'
 
 import { useAdminStore } from './stores/admin.js'
 
@@ -47,6 +52,26 @@ const routes = [
         component: AdminDashboard
       },
       {
+        path: 'about',
+        name: 'AdminAboutEdit',
+        component: AdminAboutEdit
+      },
+      {
+        path: 'header',
+        name: 'AdminHeaderEdit',
+        component: AdminHeaderEdit
+      },
+      {
+        path: 'contacts',
+        name: 'AdminContactsEdit',
+        component: AdminContactsEdit
+      },
+      {
+        path: 'backup',
+        name: 'AdminBackup',
+        component: AdminBackup
+      },
+      {
         path: 'projects',
         name: 'AdminProjectsList',
         component: AdminProjectsList
@@ -60,6 +85,11 @@ const routes = [
         path: 'projects/edit/:id',
         name: 'AdminProjectEdit',
         component: AdminProjectForm
+      },
+      {
+        path: 'users',
+        name: 'AdminUsersList',
+        component: AdminUsersList
       }
     ]
   }

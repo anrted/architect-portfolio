@@ -1,0 +1,3 @@
+# Запрещаем прямой доступ к файлам в папке backups
+Order Deny,Allow
+Deny from all

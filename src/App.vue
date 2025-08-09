@@ -14,11 +14,11 @@ import Contacts from './components/Contacts.vue'
 <template>
   <div class="min-h-screen bg-gradient-to-br from-white via-blue-50 to-blue-100 text-gray-900 font-sans antialiased">
     <Header />
-    <main class="max-w-6xl mx-auto px-4 pt-32 pb-10">
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 md:pt-32 pb-6 sm:pb-8 md:pb-10">
       <router-view />
     </main>
-    <footer class="bg-white/80 border-t border-gray-200 mt-10">
-      <div class="max-w-6xl mx-auto px-4 py-6 text-center text-gray-500 text-sm tracking-wide">
+    <footer class="bg-white/80 border-t border-gray-200 mt-6 sm:mt-8 md:mt-10">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6 text-center text-gray-500 text-xs sm:text-sm tracking-wide">
         &copy; 2025 Архитектор Иван Иванов. Все права защищены.
       </div>
     </footer>

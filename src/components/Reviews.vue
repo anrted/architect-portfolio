@@ -1,29 +1,29 @@
 <template>
-  <section id="reviews" class="mb-20">
+  <section id="reviews" class="mb-8 sm:mb-12 md:mb-16 lg:mb-20">
     <!-- Заголовок -->
-    <div class="text-center mb-16">
-      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Отзывы клиентов</h2>
-      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+    <div class="text-center mb-8 sm:mb-12 md:mb-16">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">Отзывы клиентов</h2>
+      <p class="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4 sm:px-6">
         Мнения тех, кто доверил мне создание своих проектов
       </p>
     </div>
 
     <!-- Отзывы -->
-    <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
       <!-- Отзыв 1 -->
-      <div class="group bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+      <div class="group bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-2 border border-gray-100">
         <!-- Звезды -->
-        <div class="flex items-center mb-6">
+        <div class="flex items-center mb-4 sm:mb-6">
           <div class="flex space-x-1">
-            <svg v-for="n in 5" :key="n" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+            <svg v-for="n in 5" :key="n" class="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
             </svg>
           </div>
         </div>
 
         <!-- Цитата -->
-        <blockquote class="text-gray-700 text-lg leading-relaxed mb-6 relative">
-          <svg class="absolute -top-2 -left-2 w-8 h-8 text-blue-200" fill="currentColor" viewBox="0 0 24 24">
+        <blockquote class="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed mb-4 sm:mb-6 relative pl-6 sm:pl-8">
+          <svg class="absolute top-0 left-0 w-4 h-4 sm:w-6 sm:h-6 text-blue-200" fill="currentColor" viewBox="0 0 24 24">
             <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
           </svg>
           "Работа выполнена на высшем уровне! Иван не просто создал проект дома моей мечты, но и учел все мои пожелания. Результат превзошел ожидания."
@@ -31,28 +31,28 @@
 
         <!-- Автор -->
         <div class="flex items-center">
-          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Анна Петрова" class="w-14 h-14 rounded-full shadow-lg border-2 border-white">
-          <div class="ml-4">
-            <div class="font-bold text-gray-900">Анна Петрова</div>
-            <div class="text-sm text-gray-500">Частный дом, 250 м²</div>
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Анна Петрова" class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full shadow-lg border-2 border-white">
+          <div class="ml-3 sm:ml-4">
+            <div class="font-bold text-gray-900 text-sm sm:text-base">Анна Петрова</div>
+            <div class="text-xs sm:text-sm text-gray-500">Частный дом, 250 м²</div>
           </div>
         </div>
       </div>
 
       <!-- Отзыв 2 -->
-      <div class="group bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+      <div class="group bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-2 border border-gray-100">
         <!-- Звезды -->
-        <div class="flex items-center mb-6">
+        <div class="flex items-center mb-4 sm:mb-6">
           <div class="flex space-x-1">
-            <svg v-for="n in 5" :key="n" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+            <svg v-for="n in 5" :key="n" class="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
             </svg>
           </div>
         </div>
 
         <!-- Цитата -->
-        <blockquote class="text-gray-700 text-lg leading-relaxed mb-6 relative">
-          <svg class="absolute -top-2 -left-2 w-8 h-8 text-blue-200" fill="currentColor" viewBox="0 0 24 24">
+        <blockquote class="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed mb-4 sm:mb-6 relative pl-6 sm:pl-8">
+          <svg class="absolute top-0 left-0 w-4 h-4 sm:w-6 sm:h-6 text-blue-200" fill="currentColor" viewBox="0 0 24 24">
             <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
           </svg>
           "Потрясающий проект офиса! Пространство стало функциональным и современным. Команда работает в комфорте. Рекомендую всем!"
@@ -60,28 +60,28 @@
 
         <!-- Автор -->
         <div class="flex items-center">
-          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Сергей Иванов" class="w-14 h-14 rounded-full shadow-lg border-2 border-white">
-          <div class="ml-4">
-            <div class="font-bold text-gray-900">Сергей Иванов</div>
-            <div class="text-sm text-gray-500">Офис IT-компании, 180 м²</div>
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Сергей Иванов" class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full shadow-lg border-2 border-white">
+          <div class="ml-3 sm:ml-4">
+            <div class="font-bold text-gray-900 text-sm sm:text-base">Сергей Иванов</div>
+            <div class="text-xs sm:text-sm text-gray-500">Офис IT-компании, 180 м²</div>
           </div>
         </div>
       </div>
 
       <!-- Отзыв 3 -->
-      <div class="group bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+      <div class="group bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-2 border border-gray-100 sm:col-span-2 lg:col-span-1">
         <!-- Звезды -->
-        <div class="flex items-center mb-6">
+        <div class="flex items-center mb-4 sm:mb-6">
           <div class="flex space-x-1">
-            <svg v-for="n in 5" :key="n" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+            <svg v-for="n in 5" :key="n" class="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
             </svg>
           </div>
         </div>
 
         <!-- Цитата -->
-        <blockquote class="text-gray-700 text-lg leading-relaxed mb-6 relative">
-          <svg class="absolute -top-2 -left-2 w-8 h-8 text-blue-200" fill="currentColor" viewBox="0 0 24 24">
+        <blockquote class="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed mb-4 sm:mb-6 relative pl-6 sm:pl-8">
+          <svg class="absolute top-0 left-0 w-4 h-4 sm:w-6 sm:h-6 text-blue-200" fill="currentColor" viewBox="0 0 24 24">
             <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
           </svg>
           "Переделка квартиры прошла без проблем. Иван продумал каждый сантиметр. Теперь у нас уютное и стильное пространство для всей семьи."
@@ -89,10 +89,10 @@
 
         <!-- Автор -->
         <div class="flex items-center">
-          <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Марина Козлова" class="w-14 h-14 rounded-full shadow-lg border-2 border-white">
-          <div class="ml-4">
-            <div class="font-bold text-gray-900">Марина Козлова</div>
-            <div class="text-sm text-gray-500">Квартира, 95 м²</div>
+          <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Марина Козлова" class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full shadow-lg border-2 border-white">
+          <div class="ml-3 sm:ml-4">
+            <div class="font-bold text-gray-900 text-sm sm:text-base">Марина Козлова</div>
+            <div class="text-xs sm:text-sm text-gray-500">Квартира, 95 м²</div>
           </div>
         </div>
       </div>

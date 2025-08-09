@@ -15,6 +15,39 @@ switch ($_SERVER['REQUEST_METHOD']) {
         // Получить все проекты с блоками для админки
         $user = checkAdminAuth(['projects' => ['read']]);
         
+        // Проверяем, запрашивается ли статистика
+        if (isset($_GET['stats']) && $_GET['stats'] === 'true') {
+            // Получаем статистику
+            $statsStmt = $pdo->prepare("SELECT COUNT(*) as totalProjects FROM projects");
+            $statsStmt->execute();
+            $totalProjects = $statsStmt->fetch()['totalProjects'];
+            
+            // Получаем количество проектов с блоками
+            $projectsWithBlocksStmt = $pdo->prepare("
+                SELECT COUNT(DISTINCT p.id) as projectsWithBlocks 
+                FROM projects p 
+                INNER JOIN project_blocks pb ON p.id = pb.project_id
+            ");
+            $projectsWithBlocksStmt->execute();
+            $projectsWithBlocks = $projectsWithBlocksStmt->fetch()['projectsWithBlocks'];
+            
+            // Получаем последнее обновление
+            $lastUpdateStmt = $pdo->prepare("
+                SELECT MAX(updated_at) as lastUpdate 
+                FROM projects 
+                WHERE updated_at IS NOT NULL
+            ");
+            $lastUpdateStmt->execute();
+            $lastUpdate = $lastUpdateStmt->fetch()['lastUpdate'];
+            
+            echo json_encode([
+                'totalProjects' => intval($totalProjects),
+                'projectsWithBlocks' => intval($projectsWithBlocks),
+                'lastUpdate' => $lastUpdate ? date('d.m.Y H:i', strtotime($lastUpdate)) : 'Недавно'
+            ]);
+            exit;
+        }
+        
         $page = intval($_GET['page'] ?? 1);
         $limit = intval($_GET['limit'] ?? 10);
         $search = $_GET['search'] ?? '';

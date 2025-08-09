@@ -37,7 +37,7 @@ function checkAdminAuth($requiredPermissions = null) {
     if ($requiredPermissions) {
         $permissions = json_decode($user['permissions'], true);
         
-        if (!checkPermissions($permissions, $requiredPermissions)) {
+        if (!checkPermissions($permissions, $requiredPermissions, $user['role'])) {
             http_response_code(403);
             echo json_encode(['error' => 'Insufficient permissions']);
             exit;
@@ -47,8 +47,12 @@ function checkAdminAuth($requiredPermissions = null) {
     return $user;
 }
 
-function checkPermissions($userPermissions, $requiredPermissions) {
+function checkPermissions($userPermissions, $requiredPermissions, $userRole = null) {
     // Если у пользователя роль admin, то у него есть все права
+    if ($userRole === 'admin') {
+        return true;
+    }
+    
     if ($userPermissions === null) {
         return false;
     }

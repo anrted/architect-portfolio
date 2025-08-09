@@ -165,39 +165,42 @@
         </div>
       </div>
     </div>
-  </div>
-  
-  <!-- Модал подтверждения удаления -->
-  <div v-if="showDeleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-      <h3 class="text-lg font-medium text-gray-900 mb-4">Подтвердите удаление</h3>
-      <p class="text-gray-600 mb-6">
-        Вы уверены, что хотите удалить проект "{{ projectToDelete?.title }}"? 
-        Это действие нельзя отменить.
-      </p>
-      
-      <div class="flex justify-end space-x-4">
-        <button
-          @click="cancelDelete"
-          class="px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
-        >
-          Отмена
-        </button>
-        <button
-          @click="deleteProject"
-          :disabled="deleting"
-          class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:opacity-50"
-        >
-          {{ deleting ? 'Удаление...' : 'Удалить' }}
-        </button>
+    
+    <!-- Модал подтверждения удаления -->
+    <div v-if="showDeleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Подтвердите удаление</h3>
+        <p class="text-gray-600 mb-6">
+          Вы уверены, что хотите удалить проект "{{ projectToDelete?.title }}"? 
+          Это действие нельзя отменить.
+        </p>
+        
+        <div class="flex justify-end space-x-4">
+          <button
+            @click="cancelDelete"
+            class="px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+          >
+            Отмена
+          </button>
+          <button
+            @click="deleteProject"
+            :disabled="deleting"
+            class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:opacity-50"
+          >
+            {{ deleting ? 'Удаление...' : 'Удалить' }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch, nextTick } from 'vue'
+import { useRoute, onBeforeRouteUpdate } from 'vue-router'
 import axios from 'axios'
+
+const route = useRoute()
 
 const projects = ref([])
 const loading = ref(true)
@@ -296,7 +299,26 @@ const deleteProject = async () => {
   }
 }
 
+// Загружаем данные при монтировании компонента
 onMounted(() => {
   loadProjects()
+})
+
+// Следим за изменениями маршрута и перезагружаем данные при необходимости
+watch(() => route.path, (newPath, oldPath) => {
+  if (newPath === '/admin/projects' && newPath !== oldPath) {
+    nextTick(() => {
+      loadProjects()
+    })
+  }
+})
+
+// Дополнительная проверка при обновлении маршрута
+onBeforeRouteUpdate((to, from) => {
+  if (to.path === '/admin/projects') {
+    nextTick(() => {
+      loadProjects()
+    })
+  }
 })
 </script>

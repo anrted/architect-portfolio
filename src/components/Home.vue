@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-20 animate-fadein">
+  <div class="space-y-8 sm:space-y-12 md:space-y-16 lg:space-y-20 animate-fadein">
     <About />
     <Gallery />
     <Steps />
